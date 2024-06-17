@@ -4,7 +4,7 @@ import { motion } from 'framer-motion-3d';
 import { useThree, useFrame } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
 import Office from "../Office/page";
-import Avatar from "../Avtar/page";
+// import Avatar from "../Avtar/page";
 import Background from '../Background/page';
 import * as THREE from "three";
 import Project from '../Projects/page'
@@ -110,7 +110,7 @@ const Home: React.FC<HomeProps> = ({ menuOpened }) => {
           },
         }}
       >
-        <Avatar animation={characterAnimation} />
+{/*         <Avatar animation={characterAnimation} /> */}
       </motion.group>
       <ambientLight intensity={1} />
       <motion.group

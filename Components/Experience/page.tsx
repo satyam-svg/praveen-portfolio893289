@@ -3,7 +3,7 @@ import { Float, MeshDistortMaterial, MeshWobbleMaterial, useScroll, ScrollContro
 import { motion } from 'framer-motion-3d';
 import { useThree, useFrame } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
-// import Office from "../Office/page";
+import Office from "../Office/page";
 // import Avatar from "../Avtar/page";
 import Background from '../Background/page';
 import * as THREE from "three";
@@ -119,7 +119,7 @@ const Home: React.FC<HomeProps> = ({ menuOpened }) => {
         rotation-y={-Math.PI / 4}
         animate={{ y: section === 0 ? 0 : -1 }}
       >
-{/*         <Office  /> */}
+        <Office  />
         <group
           ref={characterContainerAboutRef}
           name="Empty"

@@ -13,7 +13,7 @@ type GLTFResult =  {
 export default function Model(props:any) {
   const group = useRef()
   const { nodes, materials } = useGLTF('models/portfolio55.gltf') as unknown as GLTFResult;
-  const texture = useTexture('texture/wall.jpg');
+  const texture = useTexture('texture/wall45.jpg');
   const textureMaterial = new THREE.MeshStandardMaterial({
     map: texture,
   });

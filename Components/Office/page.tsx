@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useGLTF, useAnimations } from '@react-three/drei'
+import { useGLTF,useTexture, useAnimations } from '@react-three/drei'
 import * as THREE from 'three';
 type GLTFResult =  {
   nodes: {
@@ -13,7 +13,10 @@ type GLTFResult =  {
 export default function Model(props:any) {
   const group = useRef()
   const { nodes, materials } = useGLTF('models/portfolio55.gltf') as unknown as GLTFResult;
-  
+  const texture = useTexture('texture/wall2.jpg');
+  const textureMaterial = new THREE.MeshStandardMaterial({
+    map: texture,
+  });
   return (
     <group  {...props} dispose={null}>
       <group name="Scene">
@@ -54,7 +57,7 @@ export default function Model(props:any) {
           castShadow
           receiveShadow
           geometry={nodes.Cube.geometry}
-          material={materials.Wallls}
+          material={textureMaterial}
           position={[-0.222, 1.765, -0.234]}
         />
         <mesh
@@ -62,7 +65,7 @@ export default function Model(props:any) {
           castShadow
           receiveShadow
           geometry={nodes.Cube001.geometry}
-          material={materials.Wallls}
+          material={textureMaterial}
           position={[0.085, 0.218, 0.065]}
           scale={2}
         />
@@ -71,7 +74,7 @@ export default function Model(props:any) {
           castShadow
           receiveShadow
           geometry={nodes.Wall_floor_part.geometry}
-          material={materials.Wallls}
+          material={textureMaterial}
           position={[0.001, 1.988, -0.012]}
         />
         <mesh

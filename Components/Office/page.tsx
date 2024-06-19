@@ -1102,7 +1102,9 @@ export default function Model(props:any) {
           position={[-0.219, 1.895, 0.675]}
           rotation={[0.544, 0.515, 0.142]}
           scale={[0.24, 0.428, 0.244]}
-        />
+        >
+          <pointLight intensity={4} color="white" position={[0,0,0]}   />
+          </mesh>
       </group>
     </group>
   )

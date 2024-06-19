@@ -723,7 +723,14 @@ export default function Model(props:any) {
           rotation={[0.337, -0.11, -2.162]}
           scale={[0.063, 0.007, 0.015]}
         />
-
+         <mesh
+          name="Cylinder017"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder017.geometry}
+          material={materials['Material.028']}
+          position={[3.058, 1.163, -0.568]}
+          rotation={[Math.PI / 2, 0, 0]}>
           <mesh
             name="Table006"
             castShadow
@@ -760,6 +767,7 @@ export default function Model(props:any) {
             rotation={[-Math.PI / 2, 0, 0]}
             scale={[1.152, 1, 0.761]}
           />
+           </mesh>
        
         <group
           name="Body"

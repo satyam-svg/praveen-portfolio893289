@@ -745,7 +745,13 @@ export default function Model(props:any) {
               position={[-0.469, 0.078, -0.064]}
               rotation={[Math.PI / 2, 0, 0]}
               scale={[0.273, 0.413, 0.372]}
-            />
+            >
+               <pointLight position={[0,0,0]} color="yellow" intensity={0.3}/>
+              <pointLight position={[1,0,0]} color="yellow" intensity={0.3}/>
+              <pointLight position={[2,0,0]} color="yellow" intensity={0.3}/>
+              <pointLight position={[3,0,0]} color="yellow" intensity={0.3}/>
+            <pointLight position={[4,0,0]} color="yellow" intensity={0.3}/>
+            </mesh>
           </mesh>
           <mesh
             name="Table007"

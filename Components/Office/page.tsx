@@ -699,7 +699,9 @@ export default function Model(props:any) {
           material={materials['Material.018']}
           position={[-1.556, 2.554, 1.41]}
           scale={0.126}
-        />
+        >
+          <pointLight intensity={1} position={[0,0,0]} color="blue"/>
+          </mesh>
         <mesh
           name="Circle008"
           castShadow
@@ -708,7 +710,9 @@ export default function Model(props:any) {
           material={materials['Material.018']}
           position={[-1.281, 2.168, -1.414]}
           scale={0.126}
-        />
+        >
+          <pointLight intensity={2} position={[0,0,0]} color="blue"/>
+          </mesh>
         <mesh
           name="Cube029"
           castShadow

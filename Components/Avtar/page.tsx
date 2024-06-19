@@ -8,7 +8,7 @@ interface AvatarProps {
   headFollow?: boolean;
   cursorFollow?: boolean;
   wireframe?: boolean;
-  [key: string]: any; 
+  [key: string]: any;
 }
 
 export default function Avatar(props: AvatarProps) {
@@ -19,9 +19,9 @@ export default function Avatar(props: AvatarProps) {
   const { nodes, materials } = useGLTF('models/avtar.gltf') as any;
 
   // Load the FBX animations
-  const typingFBX = useFBX('animations/Typing.fbx') as any;
-  const fallingFBX = useFBX('animations/Falling.fbx') as any;
-  const standingFBX = useFBX('animations/Standing.fbx') as any;
+  const typingFBX = useFBX('animations/Typing.fbx');
+  const fallingFBX = useFBX('animations/Falling.fbx');
+  const standingFBX = useFBX('animations/Standing.fbx');
 
   // Ensure animation names are set
   typingFBX.animations[0].name = 'Typing';
@@ -83,7 +83,7 @@ export default function Avatar(props: AvatarProps) {
           morphTargetDictionary={nodes.EyeLeft.morphTargetDictionary}
           morphTargetInfluences={nodes.EyeLeft.morphTargetInfluences}
         >
-          <pointLight intensity={1.2} color="yellow" />
+          {/* <pointLight intensity={1.2} color="yellow" /> */}
         </skinnedMesh>
         <skinnedMesh
           frustumCulled={false}
@@ -94,7 +94,7 @@ export default function Avatar(props: AvatarProps) {
           morphTargetDictionary={nodes.EyeRight.morphTargetDictionary}
           morphTargetInfluences={nodes.EyeRight.morphTargetInfluences}
         >
-          <pointLight intensity={1.2} color="yellow" />
+          {/* <pointLight intensity={1.2} color="yellow" /> */}
         </skinnedMesh>
         <skinnedMesh
           frustumCulled={false}
@@ -151,3 +151,8 @@ export default function Avatar(props: AvatarProps) {
 
 // Preload the GLTF model
 useGLTF.preload('models/avtar.gltf');
+
+// Preload FBX animations
+useFBX.preload('animations/Typing.fbx');
+useFBX.preload('animations/Falling.fbx');
+useFBX.preload('animations/Standing.fbx');

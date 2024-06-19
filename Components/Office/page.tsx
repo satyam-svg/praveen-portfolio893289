@@ -17,6 +17,17 @@ export default function Model(props:any) {
   const textureMaterial = new THREE.MeshStandardMaterial({
     map: texture,
   });
+   const handleInstagram = () => {
+    window.open('https://www.instagram.com/maurya___satyam123/', '_blank');
+  };
+
+  const handleLinkedIn = () => {
+    window.open('https://www.linkedin.com/in/praveen-maurya-5aa355214/', '_blank');
+  };
+
+  const handleGithub = () => {
+    window.open('https://github.com/satyam-svg', '_blank');
+  };
   return (
     <group  {...props} dispose={null}>
       <group name="Scene">
@@ -31,6 +42,7 @@ export default function Model(props:any) {
           position={[0.55, 3.229, -1.558]}
           rotation={[0, 1.49, 1.563]}
           scale={1.24}
+           onClick={handleInstagram}
         />
         <mesh
           name="Curve"
@@ -41,6 +53,7 @@ export default function Model(props:any) {
           position={[0.723, 3.218, -1.562]}
           rotation={[Math.PI / 2, 0, 0]}
           scale={6.916}
+          onClick={handleLinkedIn}
         />
         <mesh
           name="github-#142"
@@ -51,6 +64,7 @@ export default function Model(props:any) {
           position={[1.18, 3.238, -1.573]}
           rotation={[Math.PI / 2, 0, 0]}
           scale={1.245}
+           onClick={handleGithub}
         />
         <mesh
           name="Cube"

@@ -1,7 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { useAnimations, useFBX, useGLTF } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
+import { useFrame, extend } from '@react-three/fiber';
 import * as THREE from 'three';
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
+
+// Extend the FBXLoader to be used in React Three Fiber
+extend({ FBXLoader });
 
 interface AvatarProps {
   animation: string;
@@ -18,57 +22,99 @@ export default function Avatar(props: AvatarProps) {
   // Load the GLTF model
   const { nodes, materials } = useGLTF('models/avtar.gltf') as any;
 
-  // Load the FBX animations
-  // const typingFBX = useFBX('animations/Typing.fbx');
-  // const fallingFBX = useFBX('animations/Falling.fbx');
-  // const standingFBX = useFBX('animations/Standing.fbx');
+  // FBXLoader instance
+  const fbxLoader = new FBXLoader();
 
-  // // Ensure animation names are set
-  // typingFBX.animations[0].name = 'Typing';
-  // fallingFBX.animations[0].name = 'Falling';
-  // standingFBX.animations[0].name = 'Standing';
+  // State to store the loaded animations
+  const animations = useRef<THREE.AnimationClip[]>([]);
 
-  // // Setup animations using useAnimations hook
-  // const { actions } = useAnimations([typingFBX.animations[0], fallingFBX.animations[0], standingFBX.animations[0]], group);
+  useEffect(() => {
+    // Load FBX animations
+    const loadFBXAnimation = (url: string) => {
+      return new Promise<THREE.AnimationClip>((resolve, reject) => {
+        fbxLoader.load(
+          url,
+          (object) => {
+            if (object.animations.length) {
+              resolve(object.animations[0]);
+            } else {
+              reject(new Error(`No animations found in ${url}`));
+            }
+          },
+          undefined,
+          reject
+        );
+      });
+    };
 
-  // // Update frame logic
-  // useFrame((state) => {
-  //   const { mouse, camera } = state;
-  //   if (group.current) {
-  //     if (props.headFollow) {
-  //       const head = group.current.getObjectByName('Head') as THREE.Object3D | null;
-  //       if (head) {
-  //         head.lookAt(camera.position);
-  //       }
-  //     }
-  //     if (props.cursorFollow) {
-  //       const target = new THREE.Vector3(mouse.x, mouse.y, 1);
-  //       const spine = group.current.getObjectByName("Spine2") as THREE.Object3D | null;
-  //       if (spine) {
-  //         spine.lookAt(target);
-  //       }
-  //     }
-  //   }
-  // });
+    Promise.all([
+      loadFBXAnimation('animations/Typing.fbx'),
+      loadFBXAnimation('animations/Falling.fbx'),
+      loadFBXAnimation('animations/Standing.fbx'),
+    ])
+      .then((loadedAnimations) => {
+        animations.current = loadedAnimations;
+        animations.current[0].name = 'Typing';
+        animations.current[1].name = 'Falling';
+        animations.current[2].name = 'Standing';
+      })
+      .catch((error) => {
+        console.error('Error loading FBX animations:', error);
+      });
+  }, [fbxLoader]);
 
-  // // Handle animation changes
-  // useEffect(() => {
-  //   if (actions && actions[animation]) {
-  //     actions[animation]?.reset().fadeIn(0.5).play();
-  //     return () => {
-  //       actions[animation]?.fadeOut(0.5).reset();
-  //     };
-  //   }
-  // }, [animation, actions]);
+  // Setup animations using the mixer and actions
+  const mixer = useRef<THREE.AnimationMixer | null>(null);
+  const actions = useRef<{ [key: string]: THREE.AnimationAction | null }>({});
 
-  // // Handle wireframe material update
-  // useEffect(() => {
-  //   if (materials) {
-  //     Object.values(materials).forEach((material: any) => {
-  //       if (material) material.wireframe = props.wireframe;
-  //     });
-  //   }
-  // }, [props.wireframe, materials]);
+  useEffect(() => {
+    if (group.current) {
+      mixer.current = new THREE.AnimationMixer(group.current);
+      animations.current.forEach((clip) => {
+        actions.current[clip.name] = mixer.current!.clipAction(clip);
+      });
+    }
+  }, [animations.current]);
+
+  // Update frame logic
+  useFrame((state, delta) => {
+    if (mixer.current) mixer.current.update(delta);
+    const { mouse, camera } = state;
+    if (group.current) {
+      if (props.headFollow) {
+        const head = group.current.getObjectByName('Head') as THREE.Object3D | null;
+        if (head) {
+          head.lookAt(camera.position);
+        }
+      }
+      if (props.cursorFollow) {
+        const target = new THREE.Vector3(mouse.x, mouse.y, 1);
+        const spine = group.current.getObjectByName("Spine2") as THREE.Object3D | null;
+        if (spine) {
+          spine.lookAt(target);
+        }
+      }
+    }
+  });
+
+  // Handle animation changes
+  useEffect(() => {
+    if (actions.current && actions.current[animation]) {
+      actions.current[animation]?.reset().fadeIn(0.5).play();
+      return () => {
+        actions.current[animation]?.fadeOut(0.5).reset();
+      };
+    }
+  }, [animation]);
+
+  // Handle wireframe material update
+  useEffect(() => {
+    if (materials) {
+      Object.values(materials).forEach((material: any) => {
+        if (material) material.wireframe = props.wireframe;
+      });
+    }
+  }, [props.wireframe, materials]);
 
   return (
     <group {...props} ref={group} dispose={null}>
@@ -82,9 +128,7 @@ export default function Avatar(props: AvatarProps) {
           skeleton={nodes.EyeLeft.skeleton}
           morphTargetDictionary={nodes.EyeLeft.morphTargetDictionary}
           morphTargetInfluences={nodes.EyeLeft.morphTargetInfluences}
-        >
-          {/* <pointLight intensity={1.2} color="yellow" /> */}
-        </skinnedMesh>
+        />
         <skinnedMesh
           frustumCulled={false}
           name="EyeRight"
@@ -93,9 +137,7 @@ export default function Avatar(props: AvatarProps) {
           skeleton={nodes.EyeRight.skeleton}
           morphTargetDictionary={nodes.EyeRight.morphTargetDictionary}
           morphTargetInfluences={nodes.EyeRight.morphTargetInfluences}
-        >
-          {/* <pointLight intensity={1.2} color="yellow" /> */}
-        </skinnedMesh>
+        />
         <skinnedMesh
           frustumCulled={false}
           name="Wolf3D_Head"
@@ -151,8 +193,3 @@ export default function Avatar(props: AvatarProps) {
 
 // Preload the GLTF model
 useGLTF.preload('models/avtar.gltf');
-
-// Preload FBX animations
-useFBX.preload('animations/Typing.fbx');
-useFBX.preload('animations/Falling.fbx');
-useFBX.preload('animations/Standing.fbx');

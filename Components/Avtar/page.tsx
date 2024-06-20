@@ -4,7 +4,6 @@ import { useFrame, extend } from '@react-three/fiber';
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 
-// Extend the FBXLoader to be used in React Three Fiber
 extend({ FBXLoader });
 
 interface AvatarProps {
@@ -29,7 +28,6 @@ export default function Avatar(props: AvatarProps) {
   const animations = useRef<THREE.AnimationClip[]>([]);
 
   useEffect(() => {
-    // Load FBX animations
     const loadFBXAnimation = (url: string) => {
       return new Promise<THREE.AnimationClip>((resolve, reject) => {
         fbxLoader.load(
@@ -42,7 +40,10 @@ export default function Avatar(props: AvatarProps) {
             }
           },
           undefined,
-          reject
+          (error) => {
+            console.error(`Error loading FBX file: ${url}`, error);
+            reject(error);
+          }
         );
       });
     };

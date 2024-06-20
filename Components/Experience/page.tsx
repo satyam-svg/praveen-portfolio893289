@@ -4,7 +4,7 @@ import { motion } from 'framer-motion-3d';
 import { useThree, useFrame } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
 import Office from "../Office/page";
-import Avatar from "../Avtar/page";
+// import Avatar from "../Avtar/page";
 import Background from '../Background/page';
 import * as THREE from "three";
 import Project from '../Projects/page'
@@ -24,12 +24,12 @@ const Home: React.FC<HomeProps> = ({ menuOpened }) => {
   const [section, setSection] = useState(0);
   const [characterAnimation, setCharacterAnimation] = useState('Typing');
 
-  useEffect(() => {
-    setCharacterAnimation("Falling");
-    setTimeout(() => {
-      setCharacterAnimation(section === 0 ? "Typing" : "Standing");
-    }, 600);
-  }, [section]);
+  // useEffect(() => {
+  //   setCharacterAnimation("Falling");
+  //   setTimeout(() => {
+  //     setCharacterAnimation(section === 0 ? "Typing" : "Standing");
+  //   }, 600);
+  // }, [section]);
 
   const data = useScroll() as CustomScrollControlsState;
 
@@ -110,7 +110,7 @@ const Home: React.FC<HomeProps> = ({ menuOpened }) => {
           },
         }}
       >
-        <Avatar animation={characterAnimation} />
+{/*         <Avatar animation={characterAnimation} /> */}
       </motion.group>
       <ambientLight intensity={1} />
       <motion.group

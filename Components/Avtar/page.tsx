@@ -19,56 +19,56 @@ export default function Avatar(props: AvatarProps) {
   const { nodes, materials } = useGLTF('models/avtar.gltf') as any;
 
   // Load the FBX animations
-  const typingFBX = useFBX('animations/Typing.fbx');
-  const fallingFBX = useFBX('animations/Falling.fbx');
-  const standingFBX = useFBX('animations/Standing.fbx');
+  // const typingFBX = useFBX('animations/Typing.fbx');
+  // const fallingFBX = useFBX('animations/Falling.fbx');
+  // const standingFBX = useFBX('animations/Standing.fbx');
 
-  // Ensure animation names are set
-  typingFBX.animations[0].name = 'Typing';
-  fallingFBX.animations[0].name = 'Falling';
-  standingFBX.animations[0].name = 'Standing';
+  // // Ensure animation names are set
+  // typingFBX.animations[0].name = 'Typing';
+  // fallingFBX.animations[0].name = 'Falling';
+  // standingFBX.animations[0].name = 'Standing';
 
-  // Setup animations using useAnimations hook
-  const { actions } = useAnimations([typingFBX.animations[0], fallingFBX.animations[0], standingFBX.animations[0]], group);
+  // // Setup animations using useAnimations hook
+  // const { actions } = useAnimations([typingFBX.animations[0], fallingFBX.animations[0], standingFBX.animations[0]], group);
 
-  // Update frame logic
-  useFrame((state) => {
-    const { mouse, camera } = state;
-    if (group.current) {
-      if (props.headFollow) {
-        const head = group.current.getObjectByName('Head') as THREE.Object3D | null;
-        if (head) {
-          head.lookAt(camera.position);
-        }
-      }
-      if (props.cursorFollow) {
-        const target = new THREE.Vector3(mouse.x, mouse.y, 1);
-        const spine = group.current.getObjectByName("Spine2") as THREE.Object3D | null;
-        if (spine) {
-          spine.lookAt(target);
-        }
-      }
-    }
-  });
+  // // Update frame logic
+  // useFrame((state) => {
+  //   const { mouse, camera } = state;
+  //   if (group.current) {
+  //     if (props.headFollow) {
+  //       const head = group.current.getObjectByName('Head') as THREE.Object3D | null;
+  //       if (head) {
+  //         head.lookAt(camera.position);
+  //       }
+  //     }
+  //     if (props.cursorFollow) {
+  //       const target = new THREE.Vector3(mouse.x, mouse.y, 1);
+  //       const spine = group.current.getObjectByName("Spine2") as THREE.Object3D | null;
+  //       if (spine) {
+  //         spine.lookAt(target);
+  //       }
+  //     }
+  //   }
+  // });
 
-  // Handle animation changes
-  useEffect(() => {
-    if (actions && actions[animation]) {
-      actions[animation]?.reset().fadeIn(0.5).play();
-      return () => {
-        actions[animation]?.fadeOut(0.5).reset();
-      };
-    }
-  }, [animation, actions]);
+  // // Handle animation changes
+  // useEffect(() => {
+  //   if (actions && actions[animation]) {
+  //     actions[animation]?.reset().fadeIn(0.5).play();
+  //     return () => {
+  //       actions[animation]?.fadeOut(0.5).reset();
+  //     };
+  //   }
+  // }, [animation, actions]);
 
-  // Handle wireframe material update
-  useEffect(() => {
-    if (materials) {
-      Object.values(materials).forEach((material: any) => {
-        if (material) material.wireframe = props.wireframe;
-      });
-    }
-  }, [props.wireframe, materials]);
+  // // Handle wireframe material update
+  // useEffect(() => {
+  //   if (materials) {
+  //     Object.values(materials).forEach((material: any) => {
+  //       if (material) material.wireframe = props.wireframe;
+  //     });
+  //   }
+  // }, [props.wireframe, materials]);
 
   return (
     <group {...props} ref={group} dispose={null}>

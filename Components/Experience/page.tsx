@@ -110,7 +110,7 @@ const Home: React.FC<HomeProps> = ({ menuOpened }) => {
           },
         }}
       >
-        <Avatar animation={characterAnimation} />
+        <Avatar position={[0,0,0]} />
       </motion.group>
       <ambientLight intensity={1} />
       <motion.group

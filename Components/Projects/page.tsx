@@ -37,7 +37,7 @@ export const projects: ProjectType[] = [
   {
     title: "Product",
     url: "",
-    image: "texture/product.jpg",
+    image: "texture/Product.jpg",
     description: "Will be Live Soon",
   },
   

@@ -21,37 +21,26 @@ interface ProjectProps {
 }
 
 // List of projects
-export const projects: ProjectType[] = [
+port const projects: ProjectType[] = [
   {
-    title: "Wawatmos",
-    url: "https://r3f-wawatmos-final.vercel.app/",
-    image: "texture/pillow.jpg",
-    description: "Recreating the Atmos Awwwards website with React Three Fiber",
+    title: "Portfolio",
+    url: "https://iampraveen.vercel.app/",
+    image: "texture/portfolio .jpg",
+    description: "This is my personal porfolio made using React three fibre,Nextjs ,typescript,Blender",
   },
   {
-    title: "Portfolio Baking",
-    url: "https://www.youtube.com/watch?v=YkHqpqJgLKw",
-    image: "texture/pillow.jpg",
-    description: "Learn how to bake a 3D model with Blender and use it in r3f",
+    title: "Inclusify",
+    url: "https://inclusify-donation-platform.vercel.app/",
+    image: "texture/donation.jpg",
+    description: "This is Official website of Inclusify where u can help poor people by donation some amounts of money",
   },
   {
-    title: "3D Avatar",
-    url: "https://www.youtube.com/watch?v=pGMKIyALcK0",
-    image: "texture/pillow.jpg",
-    description: "Learn how to use ReadyPlayerMe to create a 3D avatar",
+    title: "Product",
+    url: "",
+    image: "texture/product.jpg",
+    description: "Will be Live Soon",
   },
-  {
-    title: "Kanagame",
-    url: "https://www.youtube.com/watch?v=zwNF1-lsia8",
-    image: "texture/pillow.jpg",  
-    description: "Use React Three Fiber to create a 3D game",
-  },
-  {
-    title: "Loader",
-    url: "https://www.youtube.com/watch?v=L12wIvuZTOY",
-    image: "texture/pillow.jpg",
-    description: "Create a loading screen for your r3f projects",
-  },
+  
 ];
 
 // Project component

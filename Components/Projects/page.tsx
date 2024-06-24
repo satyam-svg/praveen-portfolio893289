@@ -21,7 +21,7 @@ interface ProjectProps {
 }
 
 // List of projects
-port const projects: ProjectType[] = [
+export const projects: ProjectType[] = [
   {
     title: "Portfolio",
     url: "https://iampraveen.vercel.app/",
@@ -72,7 +72,7 @@ const Project: React.FC<ProjectProps> = ({ project, highlighted }) => {
         onClick={() => window.open(project.url, "_blank")}
         ref={background}
       >
-        <planeGeometry args={[2.2, 2]} />
+        <planeGeometry args={[2.2, 2.1]} />
         <meshBasicMaterial color="black" transparent opacity={0.4} />
       </mesh>
       <Image
